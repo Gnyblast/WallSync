@@ -50,7 +50,7 @@ func (i *ImageMetaCache) GetRandomImage() string {
 	it := 0
 	randImageId := ""
 	for k := range i.images {
-		if it < l {
+		if it == l {
 			randImageId = k
 		}
 		it++
