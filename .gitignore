@@ -20,4 +20,5 @@
 !**/*.css
 !**/*.crt
 !**/Makefile
+!**/*.md
 **/.vscode/*
