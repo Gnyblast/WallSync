@@ -1,0 +1,23 @@
+# "Blank lines or lines starting with a hash are ignored".  Note that
+# hashes are NOT a general-purpose comment: in order for them to be
+# ignored, the hash must be the FIRST character in the line.
+
+**/*
+!**/
+!.gitignore
+!**/*.go
+!**/*.txt
+!**/*.js
+!**/*.sql
+!**/*.sh
+!**/*.http
+!**/*.sum
+!**/*.py
+!**/*.mod
+!**/*.key
+!**/*.json
+!**/*.html
+!**/*.css
+!**/*.crt
+!**/Makefile
+**/.vscode/*
