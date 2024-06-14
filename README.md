@@ -8,10 +8,15 @@
 
 ## Usage
 
-1. Clone the source code `git clone https://github.com/gnyblast/wallsync`
-2. `cd` into the directory top level and run `go build ./cmd/wallSync`
-3. Move the compiled `wallSync` binary somewhere in your `PATH`
-4. Construct your command and add it to your start-up script or create a `systemd` file and enable it.
+1. Download the `wallSync` binary
+    1. Download the `wallSync` binary from the releases.
+    2. Move the `wallSync` binary somewhere in your `PATH`
+    3. Construct your command and add it to your start-up script or create a `systemd` file and enable it.
+2. Compile from source code
+    1. Clone the source code `git clone https://github.com/gnyblast/wallsync`
+    2. `cd` into the directory top level and run `go build ./cmd/wallSync`
+    3. Move the compiled `wallSync` binary somewhere in your `PATH`
+    4. Construct your command and add it to your start-up script or create a `systemd` file and enable it.
 
 ### Examples
 
