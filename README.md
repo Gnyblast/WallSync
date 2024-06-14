@@ -19,7 +19,7 @@ Keep 10 files and upon reaching 10 don't download new:\
 `wallSync --search "world of warcraft" --ratios 16X9 --outputdir /tmp --command feh --argumentstemplate="--bg-fill %s" --refresh 1 --maximages 10`
 
 Keep 10 files and upon reaching 10 start replacing existing files from remote but always keep 10 files:\
-`wallSync --search "world of warcraft" --ratios 16X9 --outputdir /tmp --command feh --argumentstemplate="--bg-fill %s" --refresh 1 --maximages 10`
+`wallSync --search "world of warcraft" --ratios 16X9 --outputdir /tmp --command feh --argumentstemplate="--bg-fill %s" --refresh 1 --maximages 10 --rotate`
 
 P.S: `--argumentstemplate` always has to be used with `=` sign and arguments wrapped with quotes("). Check examples above.
 
