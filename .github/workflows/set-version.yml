@@ -25,9 +25,12 @@ jobs:
           branch: master
 
       - name: Create release tag
-        uses: thejeff77/action-push-tag@v1.0.0
-        with:
-          tag: "v.${{ github.ref_name }}"
-          message: "Release version: ${{ github.ref_name }}"
+        run: |
+          tag="v.${{ github.ref_name }}"
+          message="Release version: ${{ github.ref_name }}"
+          git config user.name "${GITHUB_ACTOR}"
+          git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          git tag -a "${tag}" -m "${message}"
+          git push origin "${tag}"
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
