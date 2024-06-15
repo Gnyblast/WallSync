@@ -3,7 +3,7 @@ name: Prepare Release Tag
 on:
   push:
     tags:
-      - "v.[0-9].[0-9].[0-9]"
+      - "[0-9].[0-9].[0-9]"
 
 jobs:
   build:
@@ -29,3 +29,5 @@ jobs:
           tag: "v.${{ github.ref_name }}"
           tag_exists_error: false
           message: "Release version: ${{ github.ref_name }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
