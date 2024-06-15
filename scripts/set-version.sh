@@ -11,4 +11,4 @@ fi
 
 echo "New version: ${newVersion}"
 versionNumber=$(grep VERSION "${versioningFile}" | cut -d '=' -f 2)
-sed -i "s/${versionNumber}/ \"${newVersion}\"/" "${versioningFile}"
+sed -i "s/${versionNumber}/ \"v.${newVersion}\"/" "${versioningFile}"
