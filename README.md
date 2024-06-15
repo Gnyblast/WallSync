@@ -8,7 +8,7 @@
 
 ## Usage
 
-1. Run `go install github.com/gnyblast/wallsync/cmd/wallsync@latest`
+1. Run `go install github.com/gnyblast/WallSync/cmd/wallSync@latest`
     1. Make sure installation complete without error
     2. Make sure the `GOPATH` is in your `PATH`
     3. Construct your command and add it to your start-up script or create a `systemd` file and enable it.
