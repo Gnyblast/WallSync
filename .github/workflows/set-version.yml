@@ -12,18 +12,20 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v2
         with:
           ref: master
 
       - name: Set Version
         run: ./scripts/set-version.sh ${{ github.ref_name }}
 
-      - uses: stefanzweifel/git-auto-commit-action@v5
+      - name: Commit new version
+        uses: stefanzweifel/git-auto-commit-action@v5
         with:
           branch: master
 
-      - uses: actions-ecosystem/action-push-tag@v1
+      - name: Create release tag
+        uses: actions-ecosystem/action-push-tag@v1
         with:
           tag: "v.${{ github.ref_name }}"
           message: "Release version: ${{ github.ref_name }}"
