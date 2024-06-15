@@ -27,16 +27,18 @@ func NewBackgroundImageService(args models.Args, imageUpdate chan string, imageC
 }
 
 func (b BackgroundImageService) Listen() {
-	go b.ListenImageUpdates()
-	<-b.Quit
-	close(b.Quit)
-}
-
-func (b BackgroundImageService) ListenImageUpdates() {
+loop:
 	for {
-		randImg := <-b.imageUpdate
-		b.setWallPaper(randImg)
+		select {
+		case randImg := <-b.imageUpdate:
+			b.setWallPaper(randImg)
+			break
+		case <-b.Quit:
+			break loop
+		default:
+		}
 	}
+	close(b.Quit)
 }
 
 func (b *BackgroundImageService) setWallPaper(imageId string) {

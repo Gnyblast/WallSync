@@ -24,7 +24,7 @@ type WallHavenService struct {
 	Quit                  chan bool
 }
 
-func WallHavenServiceService(args models.Args, imageUpdate chan string, imageCache *caches.ImageMetaCache) *WallHavenService {
+func NewWallHavenServiceService(args models.Args, imageUpdate chan string, imageCache *caches.ImageMetaCache) *WallHavenService {
 	return &WallHavenService{
 		requestEngine: engines.NewHttpRequestEngine("https://wallhaven.cc/api/v1/search", 0),
 		args:          args,
@@ -40,27 +40,23 @@ func (w *WallHavenService) Start() {
 	w.getMetaData()
 	w.wallpaperUpdater()
 
-	go w.ListenMetaTicker()
-	go w.ListeWallpaperTicker()
-
-	<-w.Quit
-	w.metaUpdateTicker.Stop()
-	w.wallpaperUpdateTicker.Stop()
+loop:
+	for {
+		select {
+		case <-w.metaUpdateTicker.C:
+			w.getMetaData()
+			break
+		case <-w.wallpaperUpdateTicker.C:
+			w.wallpaperUpdater()
+			break
+		case <-w.Quit:
+			w.metaUpdateTicker.Stop()
+			w.wallpaperUpdateTicker.Stop()
+			break loop
+		default:
+		}
+	}
 	close(w.Quit)
-}
-
-func (w *WallHavenService) ListenMetaTicker() {
-	for {
-		<-w.metaUpdateTicker.C
-		w.getMetaData()
-	}
-}
-
-func (w *WallHavenService) ListeWallpaperTicker() {
-	for {
-		<-w.wallpaperUpdateTicker.C
-		w.wallpaperUpdater()
-	}
 }
 
 func (w *WallHavenService) wallpaperUpdater() {
@@ -71,11 +67,14 @@ func (w *WallHavenService) wallpaperUpdater() {
 			fsEngine := engines.NewFSEngine(imagePath, w.args)
 			fsEngine.WriteImageToAFile(w.fetchImage(image))
 			w.imageCache.SetImage(image.ID, imagePath)
-			w.imageUpdate <- image.ID
 		}
+
+		w.imageUpdate <- image.ID
+
 		if w.args.MaxImages < w.imageCache.GetImagesLenght() && w.args.Rotate {
 			w.imageCache.RotateOne()
 		}
+
 		return
 	}
 

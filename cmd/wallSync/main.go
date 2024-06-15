@@ -30,7 +30,7 @@ func main() {
 	fsEngine.CreateDirectory()
 
 	imageCache := caches.NewImageMetaCache(args)
-	wallhavenService := services.WallHavenServiceService(args, imageUpdateChannel, imageCache)
+	wallhavenService := services.NewWallHavenServiceService(args, imageUpdateChannel, imageCache)
 	backgroundImagecService := services.NewBackgroundImageService(args, imageUpdateChannel, imageCache)
 
 	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM, syscall.SIGKILL)
