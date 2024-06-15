@@ -2,13 +2,16 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
+	"os"
 	"os/signal"
 	"path"
 	"syscall"
 
 	"github.com/alexflint/go-arg"
 	"github.com/gnyblast/WallSync/internal/caches"
+	"github.com/gnyblast/WallSync/internal/constants"
 	"github.com/gnyblast/WallSync/internal/engines"
 	"github.com/gnyblast/WallSync/internal/models"
 	"github.com/gnyblast/WallSync/internal/services"
@@ -16,9 +19,19 @@ import (
 )
 
 var args models.Args
+var versionArg models.VersionArg
 
 func main() {
+	arg.Parse(&versionArg)
+	if versionArg.Version {
+		PrintVersionAndDie()
+	}
+
 	arg.MustParse(&args)
+	if versionArg.Version || args.Version {
+		PrintVersionAndDie()
+	}
+
 	args.Page = 1
 	args.OutputDir = path.Join(args.OutputDir, "WallSync")
 	var imageUpdateChannel chan string = make(chan string)
@@ -47,4 +60,9 @@ func main() {
 	<-wallhavenService.Quit
 	backgroundImagecService.Quit <- true
 	<-backgroundImagecService.Quit
+}
+
+func PrintVersionAndDie() {
+	fmt.Println(constants.VERSION)
+	os.Exit(0)
 }

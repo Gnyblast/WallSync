@@ -25,39 +25,27 @@
 ### Examples
 
 Keep 10 files and upon reaching 10 don't download new:\
-`wallSync --search "world of warcraft" --ratios 16X9 --outputdir /tmp --command feh --argumentstemplate="--bg-fill %s" --refresh 1 --maximages 10`
+`wallSync --search "world of warcraft" --ratios 16X9 --output-dir /tmp --command feh --arguments-template="--bg-fill %s" --refresh 1 --max-images 10`
 
 Keep 10 files and upon reaching 10 start replacing existing files from remote but always keep 10 files:\
-`wallSync --search "world of warcraft" --ratios 16X9 --outputdir /tmp --command feh --argumentstemplate="--bg-fill %s" --refresh 1 --maximages 10 --rotate`
+`wallSync --search "world of warcraft" --ratios 16X9 --output-dir /tmp --command feh --arguments-template="--bg-fill %s" --refresh 1 --max-images 10 --rotate`
 
-P.S: `--argumentstemplate` always has to be used with `=` sign and arguments wrapped with quotes("). Check examples above.
+P.S: `--arguments-template` always has to be used with `=` sign and arguments wrapped with quotes("). Check examples above.
 
 ## Arguments
 
-`--search`: (required) WallHaven: search query - required
-
-`--categories`: WallHaven: categories [default: 100]
-
-`--purity` WallHaven: purity [default: 100]
-
-`--ratios`: WallHaven: ratios [default: 16X9]
-
-`--sorting`: WallHaven: sorting [default: relevance]
-
-`--order`: WallHaven: order [default: desc]
-
-`--aiartfilter`: WallHaven: AI Art Filter [default: 1]
-
-`--refresh`: Refresh background every x Minutes. Default is 10 [default: 10]
-
-`--outputdir`: (required) Output directory to save image files: there will be a subdirectory created named 'WallSync'
-
-`--command`: (required) Binary name to be used as background manager. i.e: feh
-
-`--argumentstemplate`: (required) Arguments for the command with %s used for image path substitution: i.e: --bg-fill %s
-
-`--maximages`: (required) Max number of images that will be stored in disk
-
-`--imagenameprefix`: Prefix for the image names that will be written to disk
-
-`--rotate`: If set, the program will be rotating the images from remote when reached MaxImages
+`--search`: (required) WallHaven: search query - required\
+`--categories`: WallHaven: categories [default: 100]\
+`--purity` WallHaven: purity [default: 100]\
+`--ratios`: WallHaven: ratios [default: 16X9]\
+`--sorting`: WallHaven: sorting [default: relevance]\
+`--order`: WallHaven: order [default: desc]\
+`--ai-art-filter`: WallHaven: AI Art Filter [default: 1]\
+`--refresh`: Refresh background every x Minutes. Default is 10 [default: 10]\
+`--output-dir`: (required) Output directory to save image files: there will be a subdirectory created named 'WallSync'\
+`--command`: (required) Binary name to be used as background manager. i.e: feh\
+`--arguments-template`: (required) Arguments for the command with %s used for image path substitution: i.e: --bg-fill %s\
+`--max-images`: (required) Max number of images that will be stored in disk\
+`--image-name-prefix`: Prefix for the image names that will be written to disk\
+`--rotate`: If set, the program will be rotating the images from remote when reached MaxImages\
+`--version`: Print version information
