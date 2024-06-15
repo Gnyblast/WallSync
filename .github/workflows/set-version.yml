@@ -1,0 +1,27 @@
+name: Prepare release tag
+
+on:
+  push:
+    tags:
+      - "[1-9].[1-9].[1-9]"
+
+jobs:
+  build:
+    name: Build Go Binary
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set Version
+        run: ./scripts/set-version.sh ${{ github.ref_name }}
+
+      - uses: stefanzweifel/git-auto-commit-action@v5
+
+      - uses: rickstaa/action-create-tag@v1
+        id: "tag_create"
+        with:
+          tag: "v.${{ github.ref_name }}"
+          tag_exists_error: false
+          message: "Release version: ${{ github.ref_name }}"

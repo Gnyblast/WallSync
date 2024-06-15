@@ -21,4 +21,5 @@
 !**/*.crt
 !**/Makefile
 !**/*.md
+!**/*.yml
 **/.vscode/*
