@@ -13,6 +13,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          ref: master
 
       - name: Set Version
         run: ./scripts/set-version.sh ${{ github.ref_name }}
