@@ -26,11 +26,13 @@ jobs:
         with:
           branch: master
 
-      - uses: rickstaa/action-create-tag@v1
-        id: "tag_create"
-        with:
-          tag: "v.${{ github.ref_name }}"
-          tag_exists_error: false
-          message: "Release version: ${{ github.ref_name }}"
+      - name: Create release tag
+        run: |
+          tag="v.${{ github.ref_name }}"
+          message="Release version: ${{ github.ref_name }}"
+          git config user.name "action user"
+          git config user.email "user@action.com"
+          git tag -a "${tag}" -m "${message}"
+          git push origin "${tag}"
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
