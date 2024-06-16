@@ -15,8 +15,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: master
-        env:
-          GITHUB_TOKEN: ${{ secrets.PAT }}
+          token: ${{ secrets.PAT }}
 
       - name: Set Version
         run: ./scripts/set-version.sh ${{ github.ref_name }}
@@ -26,13 +25,12 @@ jobs:
         with:
           branch: master
 
-      - name: Create release tag
-        run: |
-          tag="v.${{ github.ref_name }}"
-          message="Release version: ${{ github.ref_name }}"
-          git config user.name "action user"
-          git config user.email "user@action.com"
-          git tag -a "${tag}" -m "${message}"
-          git push origin "${tag}"
+      - uses: rickstaa/action-create-tag@v1
+        id: "tag_create"
+        with:
+          tag: "v.${{ github.ref_name }}"
+          tag_exists_error: false
+          message: "Release version: ${{ github.ref_name }}"
+          token: ${{ secrets.PAT }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
