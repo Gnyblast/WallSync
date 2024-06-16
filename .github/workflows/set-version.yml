@@ -24,11 +24,11 @@ jobs:
         with:
           branch: master
 
-      - name: Create release tag
-        run: |
-          tag="v.${{ github.ref_name }}"
-          message="Release version: ${{ github.ref_name }}"
-          git tag -a "${tag}" -m "${message}"
-          git push origin "${tag}"
+      - uses: rickstaa/action-create-tag@v1
+        id: "tag_create"
+        with:
+          tag: "v.${{ github.ref_name }}"
+          tag_exists_error: false
+          message: "Release version: ${{ github.ref_name }}"
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
