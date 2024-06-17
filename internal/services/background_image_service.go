@@ -7,17 +7,17 @@ import (
 	"strings"
 
 	"github.com/gnyblast/WallSync/internal/caches"
-	"github.com/gnyblast/WallSync/internal/models"
+	"github.com/gnyblast/WallSync/internal/interfaces"
 )
 
 type BackgroundImageService struct {
 	imageCache  *caches.ImageMetaCache
 	imageUpdate <-chan string
 	Quit        chan bool
-	args        models.Args
+	args        interfaces.IArgs
 }
 
-func NewBackgroundImageService(args models.Args, imageUpdate chan string, imageCache *caches.ImageMetaCache) *BackgroundImageService {
+func NewBackgroundImageService(args interfaces.IArgs, imageUpdate chan string, imageCache *caches.ImageMetaCache) *BackgroundImageService {
 	return &BackgroundImageService{
 		args:        args,
 		imageCache:  imageCache,
@@ -41,13 +41,13 @@ loop:
 
 func (b *BackgroundImageService) setWallPaper(imageId string) {
 	log.Println("Setting wallpaper")
-	o, err := exec.Command("/bin/bash", "-c", fmt.Sprintf("command -v %s", b.args.Command)).Output()
+	o, err := exec.Command("/bin/bash", "-c", fmt.Sprintf("command -v %s", b.args.GetCommand())).Output()
 	if err != nil {
 		log.Fatalf("Feh is not installed or cannot be found: %v", err)
 	}
 
 	log.Println(b.imageCache.GetImagePath(imageId))
-	arguments := fmt.Sprintf(b.args.ArgumentsTemplate, b.imageCache.GetImagePath(imageId))
+	arguments := fmt.Sprintf(b.args.GetArgumentsTemplate(), b.imageCache.GetImagePath(imageId))
 	_, err = exec.Command(strings.TrimSuffix(string(o), "\n"), strings.Split(arguments, " ")[0:]...).Output()
 	if err != nil {
 		log.Fatalf("Could not set background: %v", err)

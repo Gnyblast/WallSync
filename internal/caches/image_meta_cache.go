@@ -7,32 +7,32 @@ import (
 	"strings"
 
 	"github.com/gnyblast/WallSync/internal/engines"
-	"github.com/gnyblast/WallSync/internal/models"
+	"github.com/gnyblast/WallSync/internal/interfaces"
 )
 
 type ImageMetaCache struct {
-	args       models.Args
+	args       interfaces.IArgs
 	images     map[string]string
 	rotateList []string
 }
 
-func NewImageMetaCache(args models.Args) *ImageMetaCache {
-	fsEngine := engines.NewFSEngine(args.OutputDir, args)
+func NewImageMetaCache(args interfaces.IArgs) *ImageMetaCache {
 	imageCache := &ImageMetaCache{
 		args:       args,
 		images:     make(map[string]string),
 		rotateList: make([]string, 0),
 	}
 
+	fsEngine := engines.NewFSEngine(args.GetOutputDir(), args)
 	files := fsEngine.CollectExistingFiles()
 
 	for _, v := range files {
 		fileBaseName := strings.TrimSuffix(v, filepath.Ext(v))
-		imageCache.images[fileBaseName] = path.Join(args.OutputDir, v)
+		imageCache.images[fileBaseName] = path.Join(args.GetOutputDir(), v)
 	}
 
-	if args.MaxImages < len(imageCache.images) {
-		var deletionCount int = len(imageCache.images) - args.MaxImages
+	if args.GetMaxImages() < len(imageCache.images) {
+		var deletionCount int = len(imageCache.images) - args.GetMaxImages()
 		for i := 0; i < deletionCount; i++ {
 			imageCache.RotateOne()
 		}

@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"net/url"
 )
@@ -21,16 +20,16 @@ func NewHttpRequestEngine(host string, port int) *HttpRequestEngine {
 	}
 }
 
-func (h HttpRequestEngine) DoRequest(method string, requestBody string) []byte {
+func (h HttpRequestEngine) DoRequest(method string, requestBody string) ([]byte, error) {
 	url, err := url.Parse(h.host)
 	if err != nil {
-		log.Fatalf("Failed to parsing url: %v", err)
+		return nil, fmt.Errorf("failed to parsing url: %v", err)
 	}
 
 	if h.port > 0 {
 		url, err = url.Parse(fmt.Sprintf("%s:%d", h.host, h.port))
 		if err != nil {
-			log.Fatalf("Failed to parsing url: %v", err)
+			return nil, fmt.Errorf("failed to parsing url: %v", err)
 		}
 	}
 
@@ -46,13 +45,13 @@ func (h HttpRequestEngine) DoRequest(method string, requestBody string) []byte {
 
 	req, err := http.NewRequest(method, url.String(), body)
 	if err != nil {
-		log.Fatalf("Failed to create request: %v", err)
+		return nil, fmt.Errorf("failed to create request: %v", err)
 	}
 
 	client := http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
-		log.Fatalf("Failed to send request: %v", err)
+		return nil, fmt.Errorf("failed to send request: %v", err)
 	}
 
 	defer client.CloseIdleConnections()
@@ -60,8 +59,8 @@ func (h HttpRequestEngine) DoRequest(method string, requestBody string) []byte {
 
 	response, err := io.ReadAll(resp.Body)
 	if err != nil {
-		log.Fatalf("Failed to read response: %v", err)
+		return nil, fmt.Errorf("failed to read response: %v", err)
 	}
 
-	return response
+	return response, nil
 }

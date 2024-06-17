@@ -4,15 +4,15 @@ import (
 	"log"
 	"os"
 
-	"github.com/gnyblast/WallSync/internal/models"
+	"github.com/gnyblast/WallSync/internal/interfaces"
 )
 
 type FSEngine struct {
 	path string
-	args models.Args
+	args interfaces.IArgs
 }
 
-func NewFSEngine(path string, args models.Args) *FSEngine {
+func NewFSEngine(path string, args interfaces.IArgs) *FSEngine {
 	return &FSEngine{
 		path: path,
 		args: args,

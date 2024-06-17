@@ -7,8 +7,11 @@ import (
 	"log"
 	"mime"
 	"net/url"
+	"os"
 	"os/exec"
 	"path"
+
+	"github.com/gnyblast/WallSync/internal/constants"
 )
 
 func CheckDependencies(command string) {
@@ -57,4 +60,9 @@ func ConstructImagePath(imageId string, imageNamePrefix string, outputDir string
 	}
 	imagePath := path.Join(outputDir, imageName)
 	return imagePath
+}
+
+func PrintVersionAndDie() {
+	fmt.Println(constants.VERSION)
+	os.Exit(0)
 }
