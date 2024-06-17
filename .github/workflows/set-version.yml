@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           ref: master
           token: ${{ secrets.PAT }}
@@ -24,6 +24,13 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           branch: master
+          tagging_message: v.${{ github.ref_name }}
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: master
+          token: ${{ secrets.PAT }}
 
       - uses: rickstaa/action-create-tag@v1
         id: "tag_create"
