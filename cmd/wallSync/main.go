@@ -22,6 +22,11 @@ var args models.Args
 var versionArg models.VersionArg
 
 func main() {
+	// f, err := os.Create("cpuprofile")
+	// if err != nil {
+	// 	log.Fatal("could not create CPU profile: ", err)
+	// }
+	// pprof.StartCPUProfile(f)
 	arg.Parse(&versionArg)
 	if versionArg.Version {
 		PrintVersionAndDie()
@@ -60,6 +65,7 @@ func main() {
 	<-wallhavenService.Quit
 	backgroundImagecService.Quit <- true
 	<-backgroundImagecService.Quit
+	// pprof.StopCPUProfile()
 }
 
 func PrintVersionAndDie() {

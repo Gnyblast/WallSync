@@ -32,10 +32,8 @@ loop:
 		select {
 		case randImg := <-b.imageUpdate:
 			b.setWallPaper(randImg)
-			break
 		case <-b.Quit:
 			break loop
-		default:
 		}
 	}
 	close(b.Quit)

@@ -45,15 +45,12 @@ loop:
 		select {
 		case <-w.metaUpdateTicker.C:
 			w.getMetaData()
-			break
 		case <-w.wallpaperUpdateTicker.C:
 			w.wallpaperUpdater()
-			break
 		case <-w.Quit:
 			w.metaUpdateTicker.Stop()
 			w.wallpaperUpdateTicker.Stop()
 			break loop
-		default:
 		}
 	}
 	close(w.Quit)
