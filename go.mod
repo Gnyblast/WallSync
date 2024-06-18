@@ -6,3 +6,7 @@ require (
 	github.com/alexflint/go-arg v1.5.0 // indirect
 	github.com/alexflint/go-scalar v1.2.0 // indirect
 )
+
+retract (
+    v1.0.0 // Published accidentally.
+)
