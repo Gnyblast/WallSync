@@ -48,7 +48,7 @@ jobs:
         id: git_cliff
         with:
           config: cliff.toml
-          args: --latest --tag ${{ github.ref }}
+          args: --latest --tag ${{ github.ref_name }}
 
       - name: Create Release
         id: create_release
