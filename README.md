@@ -52,4 +52,4 @@ P.S: `--arguments-template` always has to be used with `=` sign and arguments wr
 
 ## License
 
-See [Licence.md](Licence.md) (MIT)
+See [License.md](License.md) (MIT)
