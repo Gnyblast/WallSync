@@ -22,4 +22,5 @@
 !**/Makefile
 !**/*.md
 !**/*.yml
+!**/*.toml
 **/.vscode/*
