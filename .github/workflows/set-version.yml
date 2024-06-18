@@ -27,15 +27,10 @@ jobs:
         run: ./scripts/set-version.sh ${{ steps.split_version.outputs.version }}
 
       - name: Commit new version
+        id: auto_commit_action
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           branch: master
-
-      - name: Checkout repository again for tags to containt commited files
-        uses: actions/checkout@v4
-        with:
-          ref: master
-          token: ${{ secrets.PAT }}
 
       - name: Create release tag
         uses: rickstaa/action-create-tag@v1
@@ -44,9 +39,8 @@ jobs:
           tag: "v${{ steps.split_version.outputs.version }}"
           tag_exists_error: false
           message: "Release version: ${{ steps.split_version.outputs.version }}"
-          token: ${{ secrets.PAT }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.PAT }}
+          github_token: ${{ secrets.PAT }}
+          commit_sha: ${{ steps.auto_commit_action.outputs.commit_hash }}
 
       - name: Recreate latest tag
         uses: rickstaa/action-create-tag@v1
@@ -56,6 +50,5 @@ jobs:
           tag_exists_error: false
           force_push_tag: true
           message: "Release version: ${{ steps.split_version.outputs.version }}"
-          token: ${{ secrets.PAT }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.PAT }}
+          github_token: ${{ secrets.PAT }}
+          commit_sha: ${{ steps.auto_commit_action.outputs.commit_hash }}
