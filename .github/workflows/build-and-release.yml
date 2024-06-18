@@ -36,6 +36,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
       
       - name: Generate a changelog
         uses: Gnyblast/git-cliff-action@main
