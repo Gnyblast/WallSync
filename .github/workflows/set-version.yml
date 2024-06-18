@@ -17,13 +17,13 @@ jobs:
           ref: master
           token: ${{ secrets.PAT }}
 
-      - name: set_version
+      - name: split_version
         run: |
           export plain_tag=$(TAG_NAME=${{ github.ref_name }}; echo "$TAG_NAME" | cut -d "-" -f 2)
-          echo "name=${plain_tag}" >> $GITHUB_OUTPUT
+          echo "version=${plain_tag}" >> $GITHUB_OUTPUT
 
       - name: Set version
-        run: ./scripts/set-version.sh ${{ steps.version.set_version.version }}
+        run: ./scripts/set-version.sh ${{ steps.version.split_version.version }}
 
       - name: Commit new version
         uses: stefanzweifel/git-auto-commit-action@v5
