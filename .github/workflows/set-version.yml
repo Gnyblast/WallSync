@@ -38,8 +38,6 @@ jobs:
         with:
           config: cliff.toml
           args: latest..v${{ steps.auto_commit_action.outputs.commit_hash }} --tag v${{ steps.split_version.outputs.version }}
-        env:
-          OUTPUT: CHANGELOG.md
 
       - name: Create release tag
         uses: rickstaa/action-create-tag@v1
@@ -47,7 +45,7 @@ jobs:
         with:
           tag: "v${{ steps.split_version.outputs.version }}"
           tag_exists_error: false
-          message: "${{ steps.git_cliff.outputs.changelog }}"
+          message: "${{ steps.git_cliff.outputs.content }}"
           github_token: ${{ secrets.PAT }}
           commit_sha: ${{ steps.auto_commit_action.outputs.commit_hash }}
 
@@ -58,6 +56,6 @@ jobs:
           tag: "latest"
           tag_exists_error: false
           force_push_tag: true
-          message: "${{ steps.git_cliff.outputs.changelog }}"
+          message: "${{ steps.git_cliff.outputs.content }}"
           github_token: ${{ secrets.PAT }}
           commit_sha: ${{ steps.auto_commit_action.outputs.commit_hash }}
