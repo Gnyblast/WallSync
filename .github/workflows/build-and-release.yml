@@ -82,4 +82,3 @@ jobs:
           tag_exists_error: false
           force_push_tag: true
           github_token: ${{ secrets.PAT }}
-          commit_sha: ${{ steps.auto_commit_action.outputs.commit_hash }}
