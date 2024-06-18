@@ -38,7 +38,7 @@ jobs:
         uses: actions/checkout@v4
       
       - name: Generate a changelog
-        uses: Gnyblast/git-cliff-action
+        uses: Gnyblast/git-cliff-action@main
         id: git_cliff
         with:
           config: cliff.toml
