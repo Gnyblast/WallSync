@@ -37,7 +37,7 @@ jobs:
         id: git-cliff
         with:
           config: cliff.toml
-          args: v${{ steps.auto_commit_action.outputs.commit_hash }}..latest
+          args: latest..v${{ steps.auto_commit_action.outputs.commit_hash }} --tag v${{ steps.split_version.outputs.version }}
         env:
           OUTPUT: CHANGELOG.md
 
