@@ -17,37 +17,44 @@ jobs:
           ref: master
           token: ${{ secrets.PAT }}
 
-      - name: Set Version
-        run: ./scripts/set-version.sh ${{ github.ref_name }}
+      - name: Version
+        run: |
+          export plain_tag=$(TAG_NAME=${{ github.ref_name }} echo $TAG_NAME | cut -d "-" -f 2)
+          echo ::set-output name=version::$plain_tag
+
+      - name: Set version
+        run: ./scripts/set-version.sh ${{ version }}
 
       - name: Commit new version
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           branch: master
 
-      - name: Checkout repository
+      - name: Checkout repository again for tags to containt commited files
         uses: actions/checkout@v4
         with:
           ref: master
           token: ${{ secrets.PAT }}
 
-      - uses: rickstaa/action-create-tag@v1
+      - name: Create release tag
+        uses: rickstaa/action-create-tag@v1
         id: "tag_create"
         with:
-          tag: "v${{ github.ref_name }}"
+          tag: "v${{ version }}"
           tag_exists_error: false
-          message: "Release version: ${{ github.ref_name }}"
+          message: "Release version: ${{ version }}"
           token: ${{ secrets.PAT }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
 
+      - name: Recreate latest tag
       - uses: rickstaa/action-create-tag@v1
         id: "tag_create"
         with:
           tag: "latest"
           tag_exists_error: false
           force_push_tag: true
-          message: "Release version: ${{ github.ref_name }}"
+          message: "Release version: ${{ version }}"
           token: ${{ secrets.PAT }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
