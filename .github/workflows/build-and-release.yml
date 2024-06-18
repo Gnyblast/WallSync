@@ -42,7 +42,7 @@ jobs:
         id: git_cliff
         with:
           config: cliff.toml
-          args: --current
+          args: --latest
         env:
           GITHUB_REPO: ${{ github.repository }}
 
