@@ -40,13 +40,3 @@ jobs:
           tag_exists_error: false
           github_token: ${{ secrets.PAT }}
           commit_sha: ${{ steps.auto_commit_action.outputs.commit_hash }}
-
-      - name: Recreate latest tag
-        uses: rickstaa/action-create-tag@v1
-        id: "re_tag_create"
-        with:
-          tag: "latest"
-          tag_exists_error: false
-          force_push_tag: true
-          github_token: ${{ secrets.PAT }}
-          commit_sha: ${{ steps.auto_commit_action.outputs.commit_hash }}
