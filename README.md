@@ -49,3 +49,7 @@ P.S: `--arguments-template` always has to be used with `=` sign and arguments wr
 `--image-name-prefix`: Prefix for the image names that will be written to disk\
 `--rotate`: If set, the program will be rotating the images from remote when reached MaxImages\
 `--version`: Print version information
+
+## License
+
+See [Licence.md](Licence.md) (MIT)
