@@ -36,19 +36,21 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Download binary
-        uses: actions/download-artifact@v4
-        with:
-          name: wallSync
-          path: ./wallSync
-        
+      
       - name: Generate a changelog
         uses: orhun/git-cliff-action@v3
         id: git_cliff
         with:
           config: cliff.toml
           args: --current
+        env:
+          GITHUB_REPO: ${{ github.repository }}
+
+      - name: Download binary
+        uses: actions/download-artifact@v4
+        with:
+          name: wallSync
+          path: ./wallSync
 
       - name: Create Release
         id: create_release
