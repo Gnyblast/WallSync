@@ -11,4 +11,6 @@ retract (
     v1.0.0 // Testing github actions
     v1.0.1 // Testing github actions
     v1.0.2 // Testing github actions
+    v1.0.3 // Testing github actions
+    v1.0.4 // Testing github actions
 )
