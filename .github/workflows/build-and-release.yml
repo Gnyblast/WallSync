@@ -48,7 +48,7 @@ jobs:
         id: git_cliff
         with:
           config: cliff.toml
-          args: --latest
+          args: latest..
 
       - name: Create Release
         id: create_release
