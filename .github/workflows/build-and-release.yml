@@ -42,7 +42,7 @@ jobs:
         id: git_cliff
         with:
           config: cliff.toml
-          args: -vv --latest --strip header
+          args: latest..
 
       - name: Download binary
         uses: actions/download-artifact@v4
