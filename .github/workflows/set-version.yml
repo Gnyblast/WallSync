@@ -3,7 +3,7 @@ name: Prepare Release Tag
 on:
   push:
     tags:
-      - "[0-9].[0-9].[0-9]"
+      - "[0-9]+.[0-9]+.[0-9]+"
 
 jobs:
   build:
@@ -24,7 +24,6 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           branch: master
-          tagging_message: v.${{ github.ref_name }}
 
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -35,7 +34,7 @@ jobs:
       - uses: rickstaa/action-create-tag@v1
         id: "tag_create"
         with:
-          tag: "v.${{ github.ref_name }}"
+          tag: "v${{ github.ref_name }}"
           tag_exists_error: false
           message: "Release version: ${{ github.ref_name }}"
           token: ${{ secrets.PAT }}
