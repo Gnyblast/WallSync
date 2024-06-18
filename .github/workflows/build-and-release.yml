@@ -42,6 +42,13 @@ jobs:
         with:
           name: wallSync
           path: ./wallSync
+        
+      - name: Generate a changelog
+        uses: orhun/git-cliff-action@v3
+        id: git_cliff
+        with:
+          config: cliff.toml
+          args: --latest --tag ${{ github.ref }}
 
       - name: Create Release
         id: create_release
@@ -52,7 +59,7 @@ jobs:
           tag_name: ${{ github.ref }}
           release_name: ${{ github.ref }}
           body: |
-            Binary Compiled for Debian.
+            ${{ steps.git_cliff.outputs.content }}
           draft: false
           prerelease: false
 
