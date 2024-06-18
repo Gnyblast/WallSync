@@ -42,7 +42,7 @@ jobs:
         id: git_cliff
         with:
           config: cliff.toml
-          args: --latest
+          args: -vv --latest --strip header
         env:
           GITHUB_REPO: ${{ github.repository }}
 
@@ -83,4 +83,3 @@ jobs:
           tag: "latest"
           tag_exists_error: false
           force_push_tag: true
-          github_token: ${{ secrets.PAT }}
