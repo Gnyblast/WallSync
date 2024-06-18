@@ -19,8 +19,8 @@ jobs:
 
       - name: Version
         run: |
-          export plain_tag=$(TAG_NAME=${{ github.ref_name }} echo $TAG_NAME | cut -d "-" -f 2)
-          echo :::set-output name=version::plain_tag
+          export plain_tag=$(TAG_NAME=${{ github.ref_name }}; echo "$TAG_NAME" | cut -d "-" -f 2)
+          echo "::set-output name=version::${plain_tag}"
 
       - name: Set version
         run: ./scripts/set-version.sh ${{ steps.Version.outputs.version }}
