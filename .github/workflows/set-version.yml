@@ -22,8 +22,12 @@ jobs:
           export plain_tag=$(TAG_NAME=${{ github.ref_name }}; echo "$TAG_NAME" | cut -d "-" -f 2)
           echo "version=${plain_tag}" >> $GITHUB_OUTPUT
 
+      - name: Print outputs
+        run: echo ${{ steps.split_version.outputs}}
+    
+
       - name: Set version
-        run: ./scripts/set-version.sh ${{ steps.version.split_version.version }}
+        run: ./scripts/set-version.sh ${{ steps.split_version.outputs.version }}
 
       - name: Commit new version
         uses: stefanzweifel/git-auto-commit-action@v5
@@ -40,9 +44,9 @@ jobs:
         uses: rickstaa/action-create-tag@v1
         id: "tag_create"
         with:
-          tag: "v${{ steps.Version.outputs.version }}"
+          tag: "v${{ steps.split_version.outputs.version }}"
           tag_exists_error: false
-          message: "Release version: ${{ steps.Version.outputs.version }}"
+          message: "Release version: ${{ steps.split_version.outputs.version }}"
           token: ${{ secrets.PAT }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -54,7 +58,7 @@ jobs:
           tag: "latest"
           tag_exists_error: false
           force_push_tag: true
-          message: "Release version: ${{ steps.Version.outputs.version }}"
+          message: "Release version: ${{ steps.split_version.outputs.version }}"
           token: ${{ secrets.PAT }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
