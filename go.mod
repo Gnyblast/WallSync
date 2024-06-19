@@ -8,5 +8,5 @@ require (
 )
 
 retract (
-    v1.0.0 // Testing github actions
+    [v1.0.0, v1.1.9] // Retract all from v1.0.0 to 1.1.9
 )
