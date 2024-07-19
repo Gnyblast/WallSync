@@ -120,7 +120,7 @@ func (w *WallHavenService) getMetaData() error {
 func (w WallHavenService) getRandomImage() (models.WallHavenData, error) {
 	log.Println("Downloading image")
 	var newArgs *models.WallhavenArgs = w.args
-	newArgs.Page = rand.IntN(w.metaData.LastPage-1) + 1
+	newArgs.Page = rand.IntN(w.metaData.LastPage)
 	response, err := w.requestEngine.DoRequest(http.MethodGet, utils.CreateUrlQuery(newArgs))
 	if err != nil {
 		return models.WallHavenData{}, err

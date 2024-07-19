@@ -54,7 +54,7 @@ func main() {
 	externalService := initService(serviceArgs, args, imageUpdateChannel, imageCache)
 	backgroundImagecService := services.NewBackgroundImageService(args, imageUpdateChannel, imageCache)
 
-	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM, syscall.SIGKILL)
+	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM, syscall.SIGHUP)
 	defer stop()
 
 	go backgroundImagecService.Listen()
