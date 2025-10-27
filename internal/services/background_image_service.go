@@ -41,7 +41,7 @@ loop:
 
 func (b *BackgroundImageService) setWallPaper(imageId string) {
 	log.Println("Setting wallpaper")
-	o, err := exec.Command("/bin/bash", "-c", fmt.Sprintf("command -v %s", b.args.GetCommand())).Output()
+	o, err := exec.Command("bash", "-c", fmt.Sprintf("command -v %s", b.args.GetCommand())).Output()
 	if err != nil {
 		log.Fatalf("Feh is not installed or cannot be found: %v", err)
 	}

@@ -15,7 +15,7 @@ import (
 )
 
 func CheckDependencies(command string) {
-	_, err := exec.Command("/bin/bash", "-c", fmt.Sprintf("command -v %s", command)).Output()
+	_, err := exec.Command("bash", "-c", fmt.Sprintf("command -v %s", command)).Output()
 	if err != nil {
 		log.Fatalf("Feh is not installed or cannot be found: %v", err)
 	}
