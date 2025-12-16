@@ -48,8 +48,8 @@ func (b *BackgroundImageService) setWallPaper(imageId string) {
 
 	log.Println(b.imageCache.GetImagePath(imageId))
 	arguments := fmt.Sprintf(b.args.GetArgumentsTemplate(), b.imageCache.GetImagePath(imageId))
-	_, err = exec.Command(strings.TrimSuffix(string(o), "\n"), strings.Split(arguments, " ")[0:]...).Output()
+	res, err := exec.Command(strings.TrimSuffix(string(o), "\n"), strings.Split(arguments, " ")[0:]...).Output()
 	if err != nil {
-		log.Fatalf("Could not set background: %v", err)
+		log.Fatalf("Could not set background: %v, %s", err, string(res))
 	}
 }
