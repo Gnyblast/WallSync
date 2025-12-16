@@ -1,6 +1,7 @@
 package caches
 
 import (
+	"fmt"
 	"math/rand/v2"
 	"path"
 	"path/filepath"
@@ -34,15 +35,20 @@ func NewImageMetaCache(args interfaces.IArgs) *ImageMetaCache {
 	if args.GetMaxImages() < len(imageCache.images) {
 		var deletionCount int = len(imageCache.images) - args.GetMaxImages()
 		for i := 0; i < deletionCount; i++ {
-			imageCache.RotateOne()
+			imageCache.RotateOne("")
 		}
 	}
 
 	return imageCache
 }
 
-func (i *ImageMetaCache) GetImagePath(id string) string {
-	return i.images[id]
+func (i *ImageMetaCache) GetImagePath(id string) (string, error) {
+	v, ok := i.images[id]
+	if !ok {
+		return "", fmt.Errorf("image with id %s could not be located", id)
+	}
+
+	return v, nil
 }
 
 func (i *ImageMetaCache) GetRandomImage() string {
@@ -90,7 +96,7 @@ func (i *ImageMetaCache) GetImagesLenght() int {
 	return len(i.images)
 }
 
-func (i *ImageMetaCache) RotateOne() {
+func (i *ImageMetaCache) RotateOne(exception string) {
 	if len(i.rotateList) < 1 {
 
 		i.rotateList = make([]string, 0, len(i.images))
@@ -103,5 +109,8 @@ func (i *ImageMetaCache) RotateOne() {
 
 	var index int = rand.IntN(len(i.rotateList))
 	var id string = i.rotateList[index]
+	for id == exception {
+		id = i.rotateList[index]
+	}
 	i.RemoveImage(id)
 }

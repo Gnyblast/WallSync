@@ -46,8 +46,13 @@ func (b *BackgroundImageService) setWallPaper(imageId string) {
 		log.Fatalf("Feh is not installed or cannot be found: %v", err)
 	}
 
-	log.Println(b.imageCache.GetImagePath(imageId))
-	arguments := fmt.Sprintf(b.args.GetArgumentsTemplate(), b.imageCache.GetImagePath(imageId))
+	imagePath, err := b.imageCache.GetImagePath(imageId)
+	if err != nil {
+		log.Printf("Could not find image: %v", err)
+	}
+
+	log.Println(imagePath)
+	arguments := fmt.Sprintf(b.args.GetArgumentsTemplate(), imagePath)
 	res, err := exec.Command(strings.TrimSuffix(string(o), "\n"), strings.Split(arguments, " ")[0:]...).Output()
 	if err != nil {
 		log.Fatalf("Could not set background: %v, %s", err, string(res))

@@ -92,7 +92,7 @@ func (w *WallHavenService) wallpaperUpdater() {
 		w.imageUpdate <- image.ID
 
 		if w.args.GetMaxImages() < w.imageCache.GetImagesLenght() && w.args.ShouldRotate() {
-			w.imageCache.RotateOne()
+			w.imageCache.RotateOne(image.ID)
 		}
 
 		return
