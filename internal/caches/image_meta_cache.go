@@ -110,6 +110,7 @@ func (i *ImageMetaCache) RotateOne(exception string) {
 	var index int = rand.IntN(len(i.rotateList))
 	var id string = i.rotateList[index]
 	for id == exception {
+		index = rand.IntN(len(i.rotateList))
 		id = i.rotateList[index]
 	}
 	i.RemoveImage(id)
